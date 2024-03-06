@@ -9,3 +9,6 @@ dump.rdb
 
 # Ignore pycache
 */__pycache__/
+
+# Ignore my env
+myenv/
