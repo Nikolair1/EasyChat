@@ -21,11 +21,26 @@ Key features of Easy Chat include:
 
 ## Requirements
 
-Outline the requirements to run your Django project. Include information about the required Python version, Django version, and any additional dependencies.
+To run this Django project, you'll need the following:
+
+Python Version: Python 3.8 or higher
+Django Version: Django 4.2.3
+Additional Dependencies:
+channels==4.0.0
+daphne==4.1.0
+You can install all the required dependencies by running:
+pip install -r requirements.txt
 
 ## Installation
 
-Provide instructions on how to install and set up your Django project. Include steps for installing dependencies, setting up a virtual environment, and configuring any settings.
+After cloning into the repository, you should get your local machine's hostname.
+$ hostname
+
+Then, open two terminal windows.
+In the first one run ./runserver.sh
+And in the second one run ./rundaphne.sh
+
+Then connect your devices to the local server by going to {hostname}:8000
 
 ## Usage
 
