@@ -1,6 +1,6 @@
-# Django Project Name
+# Easy Chat
 
-Brief description of your Django project.
+Easy Chat is a simple real-time chat application built using Django and Channels. It allows users to communicate with each other in real-time, share messages, and view chat history on any device.
 
 ## Table of Contents
 
