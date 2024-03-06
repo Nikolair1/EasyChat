@@ -1,0 +1,137 @@
+body {
+    background-color: #e5e5e5;
+    font-family: "Gill Sans", sans-serif;
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .ribbon-container {
+    position: relative;
+    font-size: 16px;
+  }
+  
+  .ribbon {
+    background-color: #004080; /* Darker blue color for the ribbon */
+    color: #fff;
+    text-align: left;
+    padding: 15px; /* Increase the padding for a larger ribbon */
+    font-size: 24px; /* Increase the font size */
+  }
+  
+  .login-link,
+  .home-link,
+  .history-link {
+    position: absolute;
+    top: 17px;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: inherit;
+  }
+  
+  .login-link {
+    right: 10px;
+  }
+  
+  .history-link {
+    right: 67px; /* Adjust as needed for positioning */
+  }
+  
+  .home-link {
+    right: 130px; /* Adjust as needed for positioning */
+  }
+  
+  #chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-top: 20px; /* Reduce the space between ribbon and chat container */
+    max-height: 440px; /* Maximum height for the chat container */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  #chat-container p {
+    margin: 8px 0;
+    word-wrap: break-word;
+    position: relative;
+  }
+  
+  .message-container {
+    /* Additional styling for message container */
+    position: relative;
+    margin-bottom: 10px; /* Add margin between messages */
+  }
+  
+  .message-bubble {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin: 5px 0; /* Reduce the top and bottom margin */
+    padding: 5px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .sentmessage-bubble {
+    background-color: #eaf2ff; /* Faint blue background color */
+    border-radius: 10px;
+    margin: 5px 0; /* Reduce the top and bottom margin */
+    padding: 5px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .timestamp {
+    color: #888;
+  }
+  
+  .message-content {
+    margin-top: 5px;
+  }
+  
+  #message-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #message-form input,
+  #message-form button {
+    margin: 0 auto;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    width: 40%;
+  }
+  
+  #message-form button {
+    background-color: #004080; /* Darker blue color for the button */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Styles for smaller screens (e.g., mobile devices) */
+  @media only screen and (max-width: 600px) {
+    .message-bubble {
+      font-size: 14px; /* Decrease the font size for messages */
+      padding: 8px; /* Decrease the padding for messages */
+    }
+  
+    /* Adjust other styles as needed for smaller screens */
+  }
+  
+
+  

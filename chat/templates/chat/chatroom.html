@@ -1,0 +1,237 @@
+<!-- chat/templates/chat/chatroom.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>Chatroom</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'chat/chatroom.css' %}"
+    />
+  </head>
+  <body>
+    <div class="ribbon-container">
+      <div class="ribbon">Easy Chat</div>
+      <a href="{% url 'index' %}" class="home-link">Home</a>
+      <a href="{% url 'history_page' %}" class="history-link">History</a>
+      {% if request.session.name %}
+      <script>
+        // Set a JavaScript variable with the user's name
+        var currentUser = "{{ request.session.name }}";
+      </script>
+      <a href="#" class="login-link" onclick="confirmLogout()">Logout</a>
+      {% else %}
+      <a href="{% url 'login_page' %}" class="login-link">Login</a>
+      {% endif %}
+    </div>
+
+    <div id="chat-container">
+      {% if request.session.name %} {% for message in messages %}
+      <div
+        class="{% if message.user.name == request.session.name %}sentmessage-bubble{% else %}message-bubble{% endif %}"
+      >
+        <div class="message-header">
+          <p class="username" style="color: {{ message.user.color }}">
+            {{ message.user.name }}
+          </p>
+          <p class="timestamp">{{ message.timestamp }}</p>
+        </div>
+        <div class="message-content">
+          <p>{{ message.message }}</p>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="login-to-view">
+        <p>Please log in to view messages.</p>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if request.session.name %}
+    <form id="message-form">
+      <input type="text" id="message-input" placeholder="Type your message" />
+      <button type="submit">Send</button>
+    </form>
+    {% endif %}
+
+    <script>
+      function confirmLogout() {
+        var logoutConfirmed = confirm("Are you sure you want to logout?");
+        if (logoutConfirmed) {
+          logoutUser();
+        }
+      }
+
+      function logoutUser() {
+        fetch("{% url 'logout_user' %}", {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // If logout successful, refresh the page
+              location.reload();
+            } else {
+              console.error("Logout failed");
+            }
+          })
+          .catch((error) => console.error("Error during logout:", error));
+      }
+
+      const host = window.location.hostname;
+      console.log(host);
+      const chatSocket = new WebSocket("ws://" + host + ":8001/ws/chat/");
+
+      chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        let pk = data.message;
+        fetch(`/get_message/${pk}`)
+          .then((response) => response.json())
+          .then((message) => {
+            // Render the fetched message on the frontend
+            renderMessage(message);
+          })
+          .catch((error) => console.error("Error fetching message:", error));
+        // console.log("i got a message");
+      };
+
+      chatSocket.onclose = function (e) {
+        console.error("Chat socket closed unexpectedly");
+      };
+
+      function renderMessage(message) {
+        // Create HTML elements for the new message
+        const messageBubble = document.createElement("div");
+        messageBubble.classList.add("message-bubble");
+        console.log(getCurrentUserName());
+        if (message.user.name === getCurrentUserName()) {
+          messageBubble.classList.add("sentmessage-bubble");
+        }
+
+        const messageHeader = document.createElement("div");
+        messageHeader.classList.add("message-header");
+        const username = document.createElement("p");
+        username.classList.add("username");
+        username.style.color = message.user.color;
+        username.textContent = message.user.name;
+        const timestamp = document.createElement("p");
+        timestamp.classList.add("timestamp");
+        timestamp.textContent = message.timestamp;
+        messageHeader.appendChild(username);
+        messageHeader.appendChild(timestamp);
+
+        const messageContent = document.createElement("div");
+        messageContent.classList.add("message-content");
+        const contentParagraph = document.createElement("p");
+        contentParagraph.textContent = message.message;
+        messageContent.appendChild(contentParagraph);
+
+        messageBubble.appendChild(messageHeader);
+        messageBubble.appendChild(messageContent);
+
+        // Append the new message to the chat container
+        const chatContainer = document.getElementById("chat-container");
+        chatContainer.appendChild(messageBubble);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function getCurrentUserName() {
+        // Implement the logic to retrieve the current user's name
+        // This could be retrieved from the session, local storage, or elsewhere in your application
+        // For demonstration purposes, let's assume it's stored in a global variable named currentUser
+        return currentUser;
+      }
+
+      function sendMessage(message) {
+        // Send the message via WebSocket
+        // console.log("Sending message");
+        chatSocket.send(
+          JSON.stringify({
+            type: "send_message",
+            message: message,
+          })
+        );
+      }
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("message-form")
+          .addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the message input value
+            var messageInput = document.getElementById("message-input").value;
+
+            // Make sure the message is not empty
+            if (messageInput.trim() === "") {
+              alert("Please enter a message.");
+              return;
+            }
+
+            // Create the message data object
+            var data = {
+              message: messageInput,
+            };
+
+            fetch("{% url 'post_message_api' %}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => {
+                if (response.ok) {
+                  return response.json(); // Parse the response JSON
+                } else {
+                  throw new Error(response.statusText); // Throw an error for non-OK responses
+                }
+              })
+              .then((data) => {
+                // Check the status of the response
+                if (data.status === "success") {
+                  // console.log("Message sent successfully");
+                  sendMessage(data.message_id);
+                  // Optionally, clear the message input field
+                  document.getElementById("message-input").value = "";
+                } else if (
+                  data.status === "error" &&
+                  data.message === "User is not logged in"
+                ) {
+                  console.error("User is not logged in");
+                  alert("Please log in to send messages.");
+                } else {
+                  console.error("Error sending message:", data.message);
+                  alert("Error sending message. Please try again later.");
+                }
+              })
+              .catch((error) => {
+                console.error("Error sending message:", error);
+                alert("Error sending message. Please try again later.");
+              });
+          });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Select the chat container element
+        var chatContainer = document.getElementById("chat-container");
+
+        // Scroll the chat container to the bottom
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+# Ignore the SQLite database files
+db.sqlite3
+dump.rdb
+# Ignore any files in the migrations directories
+*/migrations/
+
+# Ignore the .env file (if you're using python-dotenv)
+.env
+
+# Ignore pycache
+*/__pycache__/

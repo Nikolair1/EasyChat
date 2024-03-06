@@ -1,0 +1,58 @@
+<!-- chat/templates/chat/loginpage.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatroom</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'chat/login.css' %}"
+    />
+  </head>
+  <body>
+    <div class="ribbon-container">
+      <div class="ribbon">Login</div>
+      <a href="{% url 'index' %}" class="home-link">Home</a>
+      <a href="{% url 'history_page' %}" class="history-link">History</a>
+      <a href="{% url 'login_page' %}" class="login-link">Login</a>
+      <form id="message-form" action="{% url 'create_user' %}" method="post">
+        {% csrf_token %}
+        <input
+          type="text"
+          id="user-input"
+          name="name"
+          placeholder="Enter your username"
+        />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    {% if success %}
+    <div class="success-message">
+      You have successfully logged in! Redirecting to homepage.
+    </div>
+    {% endif %} {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Function to delay redirection after successful login
+        function redirectToHomepage() {
+          setTimeout(function () {
+            window.location.href = "{% url 'index' %}"; // Replace 'homepage' with the actual URL of the homepage
+          }, 1000); // 1000 milliseconds = 1 second
+        }
+
+        // Check if the success message exists and delay redirection if it does
+        var successMessage = document.querySelector(".success-message");
+        if (successMessage) {
+          redirectToHomepage();
+        }
+      });
+    </script>
+  </body>
+</html>
