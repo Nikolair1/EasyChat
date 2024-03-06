@@ -42,8 +42,24 @@ And in the second one run ./rundaphne.sh which will start the Daphne server runn
 Then connect your devices to the local server by going to {hostname}:8000.
 
 ## Usage
+Once the server is running, users must log in first to start sending and receiving messages.
 
-Explain how to use your Django project. Provide examples or code snippets to demonstrate usage, and include any additional information users may need to know.
+![image](https://github.com/Nikolair1/EasyChat/assets/93243326/bf62f7ad-c516-493a-afd4-40198e1a2a72)
+
+After hitting the log in button on the ribbon, users can enter any name they would like, as long as it is unique, and will be redirected back to the home page.
+
+![image](https://github.com/Nikolair1/EasyChat/assets/93243326/9e98892f-2694-4b8d-9831-aea65f2be577)
+
+After logging in, users can engage in real-time chat, where their messages are highlighted in blue, alongside other messages. The chat updates dynamically, eliminating the need for manual page refreshes.
+
+![image](https://github.com/Nikolair1/EasyChat/assets/93243326/2aebb2d1-e94f-4ac8-bd4d-bcd321acb728)
+
+Finally, users can see their message history by clicking the history button in the ribbon.
+
+![image](https://github.com/Nikolair1/EasyChat/assets/93243326/13d26508-89e1-4308-be35-c78d443279d8)
+
+
+Note: To clear all users and messages, one can either access the django admin site or delete the db.sqlite3 database.
 
 ## License
 
