@@ -37,10 +37,9 @@ After cloning into the repository, you should get your local machine's hostname.
 $ hostname
 
 Then, open two terminal windows.
-In the first one run ./runserver.sh
-And in the second one run ./rundaphne.sh
-
-Then connect your devices to the local server by going to {hostname}:8000
+In the first one run ./runserver.sh which will start the Django server.
+And in the second one run ./rundaphne.sh which will start the Daphne server running WebSockets.
+Then connect your devices to the local server by going to {hostname}:8000.
 
 ## Usage
 
