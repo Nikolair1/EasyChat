@@ -1,28 +1,23 @@
 # Easy Chat
 
-Easy Chat is a simple real-time chat application built using Django and Channels. It allows users to communicate with each other in real-time, share messages, and view chat history on any device.
+Easy Chat is a simple real-time chat application built using WebSockets and Django Channels. 
+It allows users to communicate with each other in real-time, share messages, and view chat history on any device.
+The application features a clean and intuitive user interface, making it easy for users to join chat rooms, send messages, and interact with other users. 
 
 ## Table of Contents
-
-- [Overview](#overview)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
-
-## Overview
-
-Provide a brief overview of your Django project. Mention its purpose, main features, and any other relevant information.
 
 ## Features
 
-List the main features of your Django project. You can include bullet points or a brief description of each feature.
-
-- Feature 1: Description
-- Feature 2: Description
-- ...
+Key features of Easy Chat include:
+- Real-time messaging using WebSocket technology
+- User authentication and authorization
+- Message persistence for viewing chat history
+- Responsive design for seamless user experience across devices
 
 ## Requirements
 
@@ -36,11 +31,7 @@ Provide instructions on how to install and set up your Django project. Include s
 
 Explain how to use your Django project. Provide examples or code snippets to demonstrate usage, and include any additional information users may need to know.
 
-## Contributing
-
-Provide guidelines for contributing to your Django project. Include information about how users can contribute code, report issues, and submit pull requests.
-
 ## License
 
-Specify the license under which your Django project is distributed. Include any relevant copyright or license information.
+MIT License
 
