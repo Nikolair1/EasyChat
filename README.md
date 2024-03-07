@@ -29,9 +29,12 @@ Additional Dependencies:
 channels==4.0.0
 daphne==4.1.0
 You can install all the required dependencies by running:
-pip install -r requirements.txt
+
+$ pip install -r requirements.txt
 
 ## Installation
+
+Set your django secret key in EasyChat/settings.py.
 
 After cloning into the repository, you should get your local machine's hostname.
 $ hostname
@@ -40,7 +43,7 @@ Then, open two terminal windows.
 In the first one run ./runserver.sh which will start the Django server.
 And in the second one run ./rundaphne.sh which will start the Daphne server running WebSockets.
 Then connect your devices to the local server by going to {hostname}:8000.
-
+ 
 ## Usage
 Once the server is running, users must log in first to start sending and receiving messages.
 
